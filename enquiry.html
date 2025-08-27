@@ -4,8 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enquiry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 1em;
+        }
+        nav {
+            background: #444;
+            padding: 0.5em;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: yellow;
+        }
+        main {
+            padding: 2em;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-top: 2em;
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <h1>Enquiry page</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="enquiry.html" class="active">Enquiry</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Enquiry Form:</h2>
+        <form>
+            <label for="Name:">Name:</label><br>
+            <input type="text" id="Name:" name="Name:" required><br><br>
+
+            <label for="Email:">Email:</label><br>
+            <input type="Email:" id="Email:" name="Email:" required><br><br>
+
+            <label for="Please leave your message here:">Message:</label><br>
+            <textarea id="Please leave your message here:" name="Please leave your message here:" rows="5" required></textarea><br><br>
+
+            <button type="Submit">Submit</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ProSport Hub – Sports Equipment & Apparel Store . All rights reserved.</p>
+    </footer>
 </body>
 </html>
