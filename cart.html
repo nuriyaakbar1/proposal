@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header { background: #333; color: white; padding: 1em; }
+    nav { background: #444; padding: 0.5em; }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+    nav ul li { margin-right: 20px; }
+    nav ul li a { text-decoration: none; color: white; font-weight: bold; }
+    nav ul li a:hover, nav ul li a.active { color: yellow; }
+    main { padding: 2em; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    table, th, td { border: 1px solid #ddd; }
+    th, td { padding: 10px; text-align: center; }
+    img { width: 80px; height: 80px; object-fit: cover; }
+    button { background: #333; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+    button:hover { background: #444; }
+    .total { text-align: right; margin-top: 1em; font-size: 1.2em; font-weight: bold; }
+    footer { background: #333; color: white; text-align: center; padding: 1em; margin-top: 2em; }
+</style>
+</head>
+<body>
+<header>
+    <h1>Your Shopping Cart</h1>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="cart.html" class="active">Shopping Cart</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div id="cart-container"></div>
+</main>
+
+<footer>
+    <p>&copy; 2025 ProSport Hub – Sports Equipment & Apparel Store. All rights reserved.</p>
+</footer>
+
+<script>
+    function loadCart() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const container = document.getElementById('cart-container');
+        container.innerHTML = '';
+
+        if (cart.length === 0) {
+            container.innerHTML = '<p>Your cart is empty.</p>';
+            return;
+        }
+
+        const table = document.createElement('table');
+        table.innerHTML = `
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        `;
+
+        let totalPrice = 0;
+
+        cart.forEach((item, index) => {
+            // If quantity doesn't exist, default to 1
+            if (!item.qty) item.qty = 1;
+            const itemTotal = item.price * item.qty;
+            totalPrice += itemTotal;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><img src="${item.img}" alt="${item.name}"></td>
+                <td>${item.name}</td>
+                <td>$${item.price}</td>
+                <td>
+                    <input type="number" min="1" value="${item.qty}" onchange="updateQty(${index}, this.value)">
+                </td>
+                <td>$${itemTotal}</td>
+                <td><button onclick="removeItem(${index})">Remove</button></td>
+            `;
+            table.appendChild(row);
+        });
+
+        container.appendChild(table);
+
+        const totalDiv = document.createElement('div');
+        totalDiv.className = 'total';
+        totalDiv.textContent = 'Total: $' + totalPrice;
+        container.appendChild(totalDiv);
+    }
+
+    function updateQty(index, qty) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart[index].qty = parseInt(qty);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+    }
+
+    function removeItem(index) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+    }
+
+    loadCart();
+</script>
+</body>
+</html>
